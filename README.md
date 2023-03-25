@@ -4,24 +4,24 @@ A tool for assessing unattended URL's of SharePoint which could lead toward pote
 
 # The Code
 
-$domain = "example.com" # replace with your target domain
-$vulnUrls = @("/_vti_bin/owssvr.dll", "/_vti_bin/shtml.exe", "/_vti_bin/_vti_aut/author.dll") # list of vulnerable URLs to check
-$results = @() # initialize an empty array to store the results
+$domain = "example.com" # replace with your target domain<br>
+$vulnUrls = @("/_vti_bin/owssvr.dll", "/_vti_bin/shtml.exe", "/_vti_bin/_vti_aut/author.dll") # list of vulnerable URLs to check <br>
+$results = @() # initialize an empty array to store the results <br>
 
-foreach ($url in $vulnUrls) {
-    $fullUrl = "https://$domain$url"
-    try {
-        $response = Invoke-WebRequest $fullUrl -UseBasicParsing -ErrorAction Stop
-        $status = $response.StatusCode
-    } catch {
-        $status = $_.Exception.Response.StatusCode.Value__
-    }
-    $result = [PSCustomObject]@{
-        URL = $fullUrl
-        Status = $status
-    }
-    $results += $result
-}
+foreach ($url in $vulnUrls) { <br>
+    $fullUrl = "https://$domain$url" <br>
+    try { <br>
+        $response = Invoke-WebRequest $fullUrl -UseBasicParsing -ErrorAction Stop <br>
+        $status = $response.StatusCode <br>
+    } catch { <br>
+        $status = $_.Exception.Response.StatusCode.Value__ <br>
+    } <br>
+    $result = [PSCustomObject]@{ <br>
+        URL = $fullUrl <br>
+        Status = $status <br>
+    } <br>
+    $results += $result <br>
+} <br>
 
 $results | Format-Table -AutoSize
 
